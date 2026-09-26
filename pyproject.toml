@@ -1,0 +1,27 @@
+[project]
+name = "rat-connectome-analysis"
+version = "1.0.0"
+description = "Consensus connectome construction and QA pipeline for rat structural-connectivity data across experimental groups."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+[tool.black]
+line-length = 110
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+exclude = ["data", "results", "logs", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501", "UP038"]
+
+[tool.coverage.run]
+source = ["source"]
+omit = ["*/__init__.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["validations"]

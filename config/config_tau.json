@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "project": {
+    "name": "rat-connectome-analysis",
+    "version": "1.0.0",
+    "description": "Consensus connectome construction and quality analysis for individual rat DTI/tractography matrices."
+  },
+  "data": {
+    "base_path": "data/",
+    "data_history": "FA_RN_SI_v0-1_th-0.0_N/filter_kick_out/",
+    "groups": {
+      "t1": ["R01", "R02", "R03", "R04", "R05", "R06", "R07", "R08", "R09", "R10"],
+      "t2": ["R01", "R02", "R03", "R04", "R05", "R06", "R07", "R08", "R09", "R10"]
+    },
+    "n_repetitions": 10,
+    "folder_pattern": "{rat_id}_r{rep}",
+    "file_pattern": {
+      "weight": "th-0.0_{rat_id}_w.txt",
+      "distance": "th-0.0_{rat_id}_tau.txt"
+    },
+    "expected_num_rois": 158
+  },
+  "preprocessing": {
+    "remove_self_connections": true,
+    "fictitious_nodes": [0, 1, 2, 79, 80, 81],
+    "fictitious_node_labels": [
+      "Clear Label",
+      "White Matter",
+      "Ventricles",
+      "Non-ROI artifact 1",
+      "Non-ROI artifact 2",
+      "Non-ROI artifact 3"
+    ]
+  },
+  "analysis": {
+    "occurrence_thresholds": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "min_occurrence_for_consistency": 9,
+    "cv_threshold": 0.2,
+    "outlier": {
+      "iqr_multipliers": [1.5, 3.0, 6.0],
+      "p_value_for_adaptive_multiplier": 0.01
+    }
+  },
+  "output": {
+    "results_dir": "results_tau",
+    "figures_subdir": "figures",
+    "tables_subdir": "tables",
+    "consensus_subdir": "consensus",
+    "save_figures": true,
+    "figure_format": "png",
+    "figure_dpi": 300,
+    "table_format": "csv"
+  },
+  "logging": {
+    "level": "INFO",
+    "log_dir": "logs",
+    "log_file": "run.log",
+    "max_bytes": 5242880,
+    "backup_count": 5,
+    "console_level": "INFO"
+  }
+}

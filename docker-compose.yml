@@ -1,0 +1,34 @@
+services:
+  analysis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rat-connectome-analysis:latest
+    container_name: rat-connectome-analysis
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MPLBACKEND=Agg
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./logs:/app/logs
+      - ./config:/app/config
+    command: ["--config", "config/config.json"]
+    restart: "no"
+
+  # Run the automated test suite inside the same environment as production.
+  # Usage: docker compose run --rm test
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rat-connectome-analysis:latest
+    container_name: rat-connectome-analysis-tests
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MPLBACKEND=Agg
+    volumes:
+      - ./logs:/app/logs
+    entrypoint: ["python", "-m", "pytest", "validations/", "-v"]
+    command: []
+    profiles: ["test"]

@@ -1,0 +1,56 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Testing / coverage ---
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb
+
+# --- Logs ---
+logs/*.log
+logs/*.log.*
+!logs/.gitkeep
+
+# --- Data (never commit raw/processed subject data) ---
+data/*
+
+# --- Results (generated artifacts, not source) ---
+results/*
+!results/.gitkeep
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+*.pid
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
