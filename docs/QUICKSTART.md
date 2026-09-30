@@ -107,6 +107,8 @@ data/t1/FA_RN_SI_v0-1_th-0.0_N/filter_kick_out/
 ```bash
 python scripts/run_analysis.py --config config/config.json --group t1
 python scripts/run_analysis.py --config config/config.json --group t1 --rat R01
+
+python scripts/run_analysis.py --config config/config_test.json --group t1 --rat R01
 ```
 
 ## Where results go

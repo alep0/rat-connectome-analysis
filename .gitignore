@@ -38,6 +38,7 @@ data/*
 
 # --- Results (generated artifacts, not source) ---
 results/*
+results_*/*
 !results/.gitkeep
 
 # --- Editors / OS ---

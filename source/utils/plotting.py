@@ -106,7 +106,7 @@ def plot_survival_curve(df_survival: pd.DataFrame, out_path: Path, dpi: int = 30
     _save(fig, out_path, dpi)
 
 
-def plot_cv_scatter(df: pd.DataFrame, out_path: Path, dpi: int = 300) -> None:
+def plot_ocurrence_scatter(df: pd.DataFrame, out_path: Path, dpi: int = 300) -> None:
     fig, ax = plt.subplots(figsize=(10, 7))
     scatter = ax.scatter(
         df["distance"],
@@ -125,6 +125,74 @@ def plot_cv_scatter(df: pd.DataFrame, out_path: Path, dpi: int = 300) -> None:
     fig.tight_layout()
     _save(fig, out_path, dpi)
 
+
+def plot_cv_scatter(df: pd.DataFrame, out_path: Path, dpi: int = 300) -> None:
+    mask_cero = (df["cv"] == 0.0)
+    fig, ax = plt.subplots(figsize=(10, 7))
+    scatter = ax.scatter(
+        df["distance"],
+        np.log10(df["weight"].clip(lower=1e-12)),
+        c=df["cv"],
+        s=10,
+        cmap="viridis",
+        alpha=0.6,
+    )
+    ax.scatter(
+        df["distance"][mask_cero], 
+        np.log10(df["weight"][mask_cero].clip(lower=1e-12)),
+        color='red',
+        s=10,        
+        alpha=0.9, 
+        )
+    cbar = fig.colorbar(scatter, ax=ax)
+    cbar.set_label('Cross Variance Across Subjects, CV', fontsize=12)
+    ax.set_title('Weight Distribution with Coefficient of Variation Across Subjects')
+    ax.set_xlabel(r"Physical Distance, $d_{Real}$")
+    ax.set_ylabel(r"$\log_{10}(\mathrm{Weight})$")
+    ax.grid(True, linestyle="--", alpha=0.7)
+    fig.tight_layout()
+    _save(fig, out_path, dpi)
+
+
+def cv_ocurrence_boxplot(df: pd.DataFrame, out_path: Path, dpi: int = 300) -> None:
+    df_plot = pd.DataFrame({
+        'Apariciones': df["pct_occurrence"],
+        'CV': df["cv"]
+    })
+    
+    fig, ax = plt.subplots(figsize=(10, 7))
+    
+    sns.boxplot(
+        x='Apariciones', 
+        y='CV', 
+        data=df_plot, 
+        color='lightgray', 
+        showfliers=False, 
+        width=0.5,
+        ax=ax
+    )
+    
+    sns.stripplot(
+        x='Apariciones', 
+        y='CV', 
+        data=df_plot, 
+        hue='Apariciones',
+        palette='plasma', 
+        alpha=0.4, 
+        jitter=True, 
+        size=4,
+        legend=False,
+        ax=ax
+    )
+    
+    ax.set_title('CV Boxplot with spreading', fontsize=14)
+    ax.set_xlabel('Occurrence', fontsize=12)
+    ax.set_ylabel('Variation coefficient (CV)', fontsize=12)
+    ax.grid(True, axis='y', linestyle='--', alpha=0.6)
+    
+    fig.tight_layout()
+    _save(fig, out_path, dpi)
+    
 
 def plot_cv_distribution(
     cv_hist_values: np.ndarray, out_path: Path, n_bins: int = 50, dpi: int = 300

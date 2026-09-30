@@ -47,6 +47,7 @@ def validate_data_layout(config: dict, logger) -> list[str]:
                 if w_file.is_file() and d_file.is_file():
                     found_any = True
                     print(w_file)
+                    print(d_file)
                 else:
                     logger.debug(
                         "Missing expected file(s) for group='%s' rat='%s' rep=%d.", group_name, rat_id, rep

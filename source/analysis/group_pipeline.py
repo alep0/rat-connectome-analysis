@@ -226,7 +226,9 @@ class GroupAnalysisPipeline:
         if not df_survival.empty:
             plotting.plot_survival_curve(df_survival, out_dir / "occurrence_survival_curve.png", self.dpi)
         if not df_cv_meta.empty:
+            plotting.plot_ocurrence_scatter(df_cv_meta, out_dir / "ocurrence_weight_distance_scatter.png", self.dpi)
             plotting.plot_cv_scatter(df_cv_meta, out_dir / "cv_weight_distance_scatter.png", self.dpi)
+            plotting.cv_ocurrence_boxplot(df_cv_meta, out_dir / "cv_ocurrence_boxplot.png", self.dpi)
         if cv_flat_gt1.size:
             plotting.plot_cv_distribution(cv_flat_gt1, out_dir / "cv_distribution.png", dpi=self.dpi)
         if not df_cv_survival.empty:
